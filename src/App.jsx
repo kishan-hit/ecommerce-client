@@ -1,13 +1,14 @@
 import './App.css';
 import { RouterProvider } from "react-router-dom";
 import router from './routes';
+import { SessionProvider } from './context/SessionContext';
 
 function App() {
   return (
-    <div className="bg-slate-900 h-screen">
-      <div className="flex items-center justify-center h-screen">
+    <div className="App">
+      <SessionProvider>
         <RouterProvider router={router} />
-      </div>
+      </SessionProvider>
     </div>
   );
 }
