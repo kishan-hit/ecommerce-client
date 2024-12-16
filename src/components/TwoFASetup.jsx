@@ -7,7 +7,6 @@ const TwoFASetup = ({ onSetupComplete }) => {
 
     const fetchQRCode = async () => {
         const { data } = await setUp2FA();
-        console.log("abc", response);
         setResponse(data);
     };
 
@@ -16,7 +15,7 @@ const TwoFASetup = ({ onSetupComplete }) => {
     }, []);
 
     const copyClipBoard = async () => {
-        await navigator.clipboard.writeText(response?.secret);
+        await navigator.clipboard.writeText(response.secret);
         setMessage("Text copied to clipboard");
     };
 
@@ -33,7 +32,11 @@ const TwoFASetup = ({ onSetupComplete }) => {
             </p>
             <div className='p-6'>
                 <div className='flex justify-center'>
-                    <img src={response?.qrCode} alt='2FA QR Code' className='mb-4 border rounded-md' />
+                    {
+                        response.QRCode ? (
+                            <img src={response.QRCode} alt='2FA QR Code' className='mb-4 border rounded-md' />
+                        ) : ("")
+                    }
                 </div>
                 <div className='flex items-center mt-3 mb-3'>
                     <div className='border-t border-1 border-gray-200 flex-grow'></div>
@@ -47,7 +50,7 @@ const TwoFASetup = ({ onSetupComplete }) => {
                     <input
                         readOnly
                         defaultValue=''
-                        value=''
+                        value={response.secret}
                         className='w-full border rounded mt-2 text-xs text-gray-600 p-4'
                         onClick={copyClipBoard}
                     />
