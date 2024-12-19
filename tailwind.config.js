@@ -4,7 +4,13 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        rubik: ['Rubik', 'sans-serif'],
+        pacifico: ['Pacifico', 'cursive'],
+        playright: ['Playwrite US Trad Guides', 'serif']
+      },
+    },
   },
   plugins: [],
 }
