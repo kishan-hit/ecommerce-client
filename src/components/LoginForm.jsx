@@ -3,9 +3,10 @@ import { Link } from "react-router";
 import axios from 'axios';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
-import { registerUser, loginUser } from '../service/authApi';
+import { registerUser, loginUser, googleLogin } from '../service/authApi';
 import { Toaster, toast } from 'react-hot-toast';
 import { Validate } from './Validations';
+import { useSession } from '../context/SessionContext';
 
 const LoginForm = ({ onLoginSuccess }) => {
     const [isRegister, setIsRegister] = useState(false);
@@ -17,8 +18,9 @@ const LoginForm = ({ onLoginSuccess }) => {
     const [passVisible, setPassVisible] = useState(false);
     const [confPassVisible, setConfPassVisible] = useState(false);
     const navigate = useNavigate();
+    const { login } = useSession();
 
-    const login = useGoogleLogin({
+    const googleOAuthLogin = useGoogleLogin({
         onSuccess: (codeResponse) => {
             console.log('codeResponse', codeResponse);
             setUser(codeResponse);
@@ -108,9 +110,10 @@ const LoginForm = ({ onLoginSuccess }) => {
                     Accept: 'application/json'
                 }
             })
-                .then((res) => {
-                    console.log('res', res);
-                    navigate('/');
+                .then(async (res) => {
+                    console.log("result", res.data);
+
+                    window.location.href = "http://localhost:8010/api/auth/google-login";
                 })
                 .catch((err) => console.log(err));
         }
@@ -232,7 +235,7 @@ const LoginForm = ({ onLoginSuccess }) => {
                                             </div>
                                             <div className='flex items-center justify-center'>
                                                 <button
-                                                    onClick={() => login()}
+                                                    onClick={() => googleOAuthLogin()}
                                                     className="w-[260px] bg-lime-600 max-w-sm flex items-center justify-center py-[8px] mb-4 border border-[#72777F] text-gray-700 rounded-full hover:bg-gray-200"
                                                 >
                                                     <i className="bi bi-google mr-2"></i>

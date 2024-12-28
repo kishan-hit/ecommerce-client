@@ -16,6 +16,20 @@ export const loginUser = async (email, password) => {
     })
 }
 
+export const googleLogin = async (googleData) => {
+    try {
+        const response = await api.post(
+            "/auth/google-login",
+            googleData,
+            { withCredentials: true }
+        );
+        return response.data;
+    } catch (error) {
+        console.error("Error during Google login:", error);
+        throw error;
+    }
+};
+
 export const authStatus = async () => {
     return await api.get("/auth/status", {
         withCredentials: true
