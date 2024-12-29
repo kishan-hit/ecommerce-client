@@ -3,10 +3,9 @@ import { Link } from "react-router";
 import axios from 'axios';
 import { useGoogleLogin } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
-import { registerUser, loginUser, googleLogin } from '../service/authApi';
+import { registerUser, loginUser } from '../service/authApi';
 import { Toaster, toast } from 'react-hot-toast';
 import { Validate } from './Validations';
-import { useSession } from '../context/SessionContext';
 
 const LoginForm = ({ onLoginSuccess }) => {
     const [isRegister, setIsRegister] = useState(false);
@@ -18,7 +17,6 @@ const LoginForm = ({ onLoginSuccess }) => {
     const [passVisible, setPassVisible] = useState(false);
     const [confPassVisible, setConfPassVisible] = useState(false);
     const navigate = useNavigate();
-    const { login } = useSession();
 
     const googleOAuthLogin = useGoogleLogin({
         onSuccess: (codeResponse) => {
